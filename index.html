@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Tracker - Enterprise IT Helpdesk & Support System</title>
+  <meta name="description" content="IT Tracker - Enterprise Support Ticketing System with SLA Tracking, Kanban Boards, Deflection KB, and Live Analytics.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Application CSS Design System -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+  <div id="app" class="app-layout">
+    <!-- Header Component -->
+    <header id="header-container" class="app-header"></header>
+
+    <div class="app-body">
+      <!-- Sidebar Navigation Component -->
+      <aside id="sidebar-container" class="app-sidebar"></aside>
+
+      <!-- Main Content View Area -->
+      <main id="main-content" class="app-main">
+        <div id="view-loader" class="view-loader hidden">
+          <div class="spinner"></div>
+        </div>
+        <div id="view-container" class="view-content"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modals & Drawers Container -->
+  <div id="modal-container" class="modal-root"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-root"></div>
+
+  <!-- Application Entry Point JS -->
+  <script type="module" src="js/app.js?v=27"></script>
+</body>
+</html>
