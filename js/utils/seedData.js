@@ -78,7 +78,8 @@ export const INITIAL_DESIGNATIONS = [
 export const INITIAL_SUPPORT_TEAMS = [
   "Ravi kumar",
   "sai Krishna",
-  "Teja"
+  "Teja",
+  "Srinivas Theerthala"
 ];
 
 export const INITIAL_TICKET_SCOPES = [

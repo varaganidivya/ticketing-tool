@@ -19,7 +19,7 @@ export function renderTicketListView(container) {
       </div>
       <div>
         <button id="btn-create-ticket-list" class="btn btn-primary">
-          <i class="fa-solid fa-plus"></i> + Create New
+          <i class="fa-solid fa-plus"></i> Create New
         </button>
       </div>
     </div>

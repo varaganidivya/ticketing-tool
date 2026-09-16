@@ -267,21 +267,72 @@ export function bindCreateFormEvents(container, closeCallback) {
     attachedFiles.forEach((file, index) => {
       const chip = document.createElement('div');
       chip.className = 'file-chip';
+      chip.style.cssText = 'display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.825rem; margin: 4px;';
       chip.innerHTML = `
-        <i class="fa-solid fa-paperclip"></i>
-        <span>${escapeHTML(file.name)} (${(file.size / 1024).toFixed(1)} KB)</span>
-        <i class="fa-solid fa-xmark file-chip-remove" data-index="${index}"></i>
+        <i class="fa-solid fa-file" style="color: var(--brand-primary); font-size: 0.95rem;"></i>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-weight: 600; color: var(--text-main);">${escapeHTML(file.name)}</span>
+          <span style="font-size: 0.72rem; color: var(--text-dim);">${(file.size / 1024).toFixed(1)} KB</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; margin-left: 8px;">
+          <button type="button" class="btn btn-ghost btn-sm file-chip-see" data-index="${index}" style="font-size: 0.75rem; padding: 3px 8px; color: var(--brand-primary); border: 1px solid rgba(99,102,241,0.3); border-radius: 4px;" title="See / View Document">
+            <i class="fa-solid fa-eye"></i> See
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm file-chip-delete" data-index="${index}" style="font-size: 0.75rem; padding: 3px 8px; color: #ef4444; border: 1px solid rgba(239,68,68,0.3); border-radius: 4px;" title="Delete Document">
+            <i class="fa-solid fa-trash-can"></i> Delete
+          </button>
+        </div>
       `;
       filesContainer.appendChild(chip);
     });
 
-    filesContainer.querySelectorAll('.file-chip-remove').forEach(removeBtn => {
-      removeBtn.addEventListener('click', (e) => {
-        const idx = parseInt(removeBtn.getAttribute('data-index'));
-        attachedFiles.splice(idx, 1);
-        updateFilesUI();
+    // Add More Documents button wrapper
+    const addMoreDiv = document.createElement('div');
+    addMoreDiv.style.cssText = 'width: 100%; margin-top: 10px;';
+    addMoreDiv.innerHTML = `
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-add-more-docs">
+        <i class="fa-solid fa-folder-plus" style="color: var(--brand-primary);"></i> + Add More Documents
+      </button>
+    `;
+    filesContainer.appendChild(addMoreDiv);
+
+    // See click handler
+    filesContainer.querySelectorAll('.file-chip-see').forEach(seeBtn => {
+      seeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(seeBtn.getAttribute('data-index'));
+        const file = attachedFiles[idx];
+        if (file) {
+          try {
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL, '_blank');
+          } catch (err) {
+            showToast(`Opening document ${file.name}`, 'info');
+          }
+        }
       });
     });
+
+    // Delete click handler
+    filesContainer.querySelectorAll('.file-chip-delete').forEach(deleteBtn => {
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(deleteBtn.getAttribute('data-index'));
+        const removedFile = attachedFiles[idx];
+        attachedFiles.splice(idx, 1);
+        updateFilesUI();
+        showToast(`Removed document ${removedFile ? removedFile.name : ''}`, 'info');
+      });
+    });
+
+    // Add More Documents click handler
+    const addMoreBtn = filesContainer.querySelector('#btn-add-more-docs');
+    if (addMoreBtn) {
+      addMoreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.click();
+      });
+    }
   };
 
   if (browseBtn && fileInput) {
