@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo, showToast } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDate, formatDateTime, formatTimeAgo, showToast } from '../utils/helpers.js';
 import { CANNED_RESPONSES } from '../utils/seedData.js';
 
 export function renderTicketDetailModal(modalContainer, ticketId) {
@@ -114,12 +114,14 @@ export function renderTicketDetailModal(modalContainer, ticketId) {
             <!-- Right Column: Sidebar Metadata Controls -->
             <div style="background: var(--bg-input); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 1.25rem; height: fit-content;">
               
-              <!-- SLA Widget -->
+              <!-- Ticket Due Date Widget -->
               <div>
-                <label class="form-label"><i class="fa-solid fa-clock"></i> SLA Target</label>
-                <div style="margin-top: 4px;">
-                  <span class="sla-pill ${sla.badgeClass}" style="font-size: 0.85rem;">
-                    <i class="fa-solid ${sla.icon}"></i> ${sla.text}
+                <label class="form-label" style="font-weight: 700; color: var(--text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-calendar-check" style="color: var(--brand-primary)"></i> Ticket Due Date
+                </label>
+                <div style="margin-top: 6px;">
+                  <span class="badge" style="background: rgba(99, 102, 241, 0.12); color: var(--brand-primary); border: 1px solid rgba(99, 102, 241, 0.3); font-size: 0.875rem; font-weight: 700; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; border-radius: var(--radius-md);">
+                    <i class="fa-regular fa-calendar-days"></i> ${ticket.dueDate ? formatDate(ticket.dueDate) : 'Not specified'}
                   </span>
                 </div>
               </div>

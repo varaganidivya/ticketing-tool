@@ -73,6 +73,20 @@ export function formatDateTime(timestamp) {
 }
 
 /**
+ * Formats YYYY-MM-DD or date string into clean date (e.g. Sep 18, 2026).
+ */
+export function formatDate(dateStr) {
+  if (!dateStr) return 'Not set';
+  const date = new Date(dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`);
+  if (isNaN(date.getTime())) return String(dateStr);
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+
+/**
  * Shows a toast message on screen.
  */
 export function showToast(message, type = 'info') {

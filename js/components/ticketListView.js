@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDate, formatDateTime, formatTimeAgo } from '../utils/helpers.js';
 import { INITIAL_COMPANIES, INITIAL_CATEGORIES, INITIAL_LOCATIONS, INITIAL_DEPARTMENTS } from '../utils/seedData.js';
 
 export function renderTicketListView(container) {
@@ -122,7 +122,7 @@ export function renderTicketListView(container) {
               <th>Priority</th>
               <th>Status</th>
               <th>Assignee</th>
-              <th>SLA Status</th>
+              <th>Due Date</th>
             </tr>
           </thead>
           <tbody>
@@ -176,8 +176,8 @@ export function renderTicketListView(container) {
                     </div>
                   </td>
                   <td>
-                    <span class="sla-pill ${sla.badgeClass}">
-                      <i class="fa-solid ${sla.icon}"></i> ${sla.text}
+                    <span class="badge" style="background: rgba(99, 102, 241, 0.1); color: var(--brand-primary); font-weight: 700; font-size: 0.78rem; padding: 4px 8px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; gap: 4px;">
+                      <i class="fa-regular fa-calendar-check"></i> ${t.dueDate ? formatDate(t.dueDate) : 'Not set'}
                     </span>
                   </td>
                 </tr>
