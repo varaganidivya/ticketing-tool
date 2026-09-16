@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML, formatTimeAgo, showToast } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo, showToast } from '../utils/helpers.js';
 import { CANNED_RESPONSES } from '../utils/seedData.js';
 
 export function renderTicketDetailModal(modalContainer, ticketId) {
@@ -126,6 +126,9 @@ export function renderTicketDetailModal(modalContainer, ticketId) {
 
               <!-- Location & Dept Info -->
               <div style="padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 6px; font-size: 0.825rem;">
+                <div><strong style="color: var(--text-dim);"><i class="fa-solid fa-user-pen" style="color: var(--brand-primary); margin-right: 4px;"></i>Ticket Created By:</strong> <span style="color: var(--text-main); font-weight: 700; font-size: 0.875rem;">${escapeHTML(ticket.createdBy || (ticket.reporter ? ticket.reporter.name : 'Srinivas Theerthala'))}</span></div>
+                <div><strong style="color: var(--text-dim);"><i class="fa-regular fa-calendar-days" style="color: var(--brand-primary); margin-right: 4px;"></i>Created Date:</strong> <span style="color: var(--text-main); font-weight: 600;">${formatDateTime(ticket.createdAt)}</span> <span style="color: var(--text-dim); font-size: 0.75rem;">(${formatTimeAgo(ticket.createdAt)})</span></div>
+                ${ticket.onBehalfOf ? `<div><strong style="color: var(--text-dim);">On Behalf Of:</strong> <span style="color: var(--text-main); font-weight: 600;">${escapeHTML(ticket.onBehalfOf)}</span></div>` : ''}
                 <div><strong style="color: var(--text-dim);">Location:</strong> <span style="color: var(--text-main); font-weight: 600;"><i class="fa-solid fa-location-dot" style="color: var(--brand-primary); margin-right: 4px;"></i>${escapeHTML(ticket.location || 'Kondapur')}</span></div>
                 <div><strong style="color: var(--text-dim);">Department:</strong> <span style="color: var(--text-main); font-weight: 600;">${escapeHTML(ticket.department || 'IT')}</span></div>
                 <div><strong style="color: var(--text-dim);">Designation:</strong> <span style="color: var(--text-main); font-weight: 600;">${escapeHTML(ticket.designation || 'Executive')}</span></div>

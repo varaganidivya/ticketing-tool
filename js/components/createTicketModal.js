@@ -53,7 +53,16 @@ export function getCreateTicketHTML(isModal = true) {
               <div class="form-section-title">
                 <i class="fa-solid fa-id-card" style="color: var(--brand-primary)"></i> LOCATION & ASSIGNMENT
               </div>
-              <div class="form-section-subtitle">Client, location, department, designation, team, due date and contact</div>
+              <div class="form-section-subtitle">Ticket creator person name, client, location, department, designation, team, due date and contact</div>
+
+              <!-- Ticket Created By Field (Separate Input) -->
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" for="ticket-created-by" style="font-weight: 700;">
+                  <i class="fa-solid fa-user-pen" style="color: var(--brand-primary); margin-right: 4px;"></i>
+                  Ticket Created By (Person Name) <span style="color: #ef4444;">*</span>
+                </label>
+                <input type="text" id="ticket-created-by" class="form-input" value="Srinivas Theerthala" placeholder="Enter person name creating this ticket (e.g. Srinivas Theerthala)" required>
+              </div>
 
               <!-- Row 1: Client, Location, Department, Designation -->
               <div class="form-grid-4" style="margin-bottom: 1rem;">
@@ -357,6 +366,7 @@ export function bindCreateFormEvents(container, closeCallback) {
       
       const title = titleInput.value.trim();
       const description = container.querySelector('#ticket-description').value.trim();
+      const createdBy = container.querySelector('#ticket-created-by')?.value.trim() || "Srinivas Theerthala";
       const company = container.querySelector('#ticket-company').value || "GEM Arena";
       const location = container.querySelector('#ticket-location')?.value || "Kondapur";
       const department = container.querySelector('#ticket-department')?.value || "IT";
@@ -376,6 +386,7 @@ export function bindCreateFormEvents(container, closeCallback) {
       const newTicket = store.createTicket({
         title,
         description,
+        createdBy,
         company,
         location,
         onBehalfOf,

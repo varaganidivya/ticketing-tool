@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo } from '../utils/helpers.js';
 import { INITIAL_COMPANIES, INITIAL_CATEGORIES, INITIAL_LOCATIONS, INITIAL_DEPARTMENTS } from '../utils/seedData.js';
 
 export function renderTicketListView(container) {
@@ -114,6 +114,8 @@ export function renderTicketListView(container) {
             <tr>
               <th>ID</th>
               <th>Ticket Title</th>
+              <th>Ticket Created By</th>
+              <th>Created Date</th>
               <th>Category</th>
               <th>Client / Location</th>
               <th>Dept / Designation</th>
@@ -126,12 +128,31 @@ export function renderTicketListView(container) {
           <tbody>
             ${filteredTickets.map(t => {
               const sla = calculateSLA(t);
+              const createdByName = t.createdBy || (t.reporter ? t.reporter.name : 'Srinivas Theerthala');
+              const avatarInitials = t.reporter?.avatar || createdByName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'ST';
               return `
                 <tr class="ticket-row" data-id="${t.id}">
                   <td class="table-ticket-id">${t.id}</td>
                   <td>
                     <div class="table-ticket-title">${escapeHTML(t.title)}</div>
-                    <div class="table-ticket-sub">Contact: ${escapeHTML(t.contactNo || '9381036252')} • ${t.onBehalfOf ? `On behalf of ${t.onBehalfOf}` : `Reporter: ${escapeHTML(t.reporter.name)}`}</div>
+                    <div class="table-ticket-sub">
+                      Contact: ${escapeHTML(t.contactNo || '9381036252')}
+                      ${t.onBehalfOf ? ` • <span style="color: var(--text-dim);">On behalf of: ${escapeHTML(t.onBehalfOf)}</span>` : ''}
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div class="user-avatar" style="width: 28px; height: 28px; font-size: 0.72rem; background: var(--brand-primary); color: #ffffff; flex-shrink: 0; font-weight: 700;">${avatarInitials}</div>
+                      <div style="display: flex; flex-direction: column;">
+                        <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">${escapeHTML(createdByName)}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                      <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);"><i class="fa-regular fa-calendar-days" style="color: var(--brand-primary); margin-right: 4px;"></i>${formatDateTime(t.createdAt)}</span>
+                      <span style="font-size: 0.72rem; color: var(--text-dim);">${formatTimeAgo(t.createdAt)}</span>
+                    </div>
                   </td>
                   <td><span class="badge badge-category" style="background: rgba(6, 182, 212, 0.12); color: #38bdf8; font-weight: 700;">${t.category}</span></td>
                   <td>

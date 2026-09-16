@@ -35,7 +35,8 @@ export const INITIAL_LOCATIONS = [
   "Erragadda SUZUKI",
   "SomajiGuda SUZUKI",
   "Krishna Nagar SUZUKI",
-  "Vikarabad SUZUKI"
+  "Vikarabad SUZUKI",
+  "Shankarpally SUZUKI"
 ];
 
 export const INITIAL_DEPARTMENTS = [
@@ -131,6 +132,7 @@ export const INITIAL_TICKETS = [
     location: "Kondapur",
     department: "IT",
     designation: "Executive",
+    createdBy: "Srinivas Theerthala",
     onBehalfOf: "sai Krishna",
     supportTeam: "sai Krishna",
     contactNo: "9381036252",
@@ -162,6 +164,7 @@ export const INITIAL_TICKETS = [
     location: "Kondapur SUZUKI",
     department: "Service",
     designation: "Service Advisor",
+    createdBy: "Srinivas Theerthala",
     onBehalfOf: "Ravi kumar",
     supportTeam: "Ravi kumar",
     contactNo: "9876543210",
@@ -184,6 +187,7 @@ export const INITIAL_TICKETS = [
     location: "Madhapur",
     department: "Sales",
     designation: "Manager",
+    createdBy: "Srinivas Theerthala",
     onBehalfOf: "Teja",
     supportTeam: "Teja",
     contactNo: "9123456789",

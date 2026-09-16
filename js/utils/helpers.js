@@ -55,6 +55,24 @@ export function formatTimeAgo(timestamp) {
 }
 
 /**
+ * Formats ISO or epoch timestamp into clean readable date string (e.g. Sep 16, 2026, 01:05 PM).
+ */
+export function formatDateTime(timestamp) {
+  if (!timestamp) return 'N/A';
+  if (typeof timestamp === 'string' && timestamp.includes('ago')) return timestamp;
+  const date = new Date(timestamp);
+  if (isNaN(date.getTime())) return String(timestamp);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+
+/**
  * Shows a toast message on screen.
  */
 export function showToast(message, type = 'info') {

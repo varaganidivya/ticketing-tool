@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo } from '../utils/helpers.js';
 import { INITIAL_CATEGORIES, INITIAL_SUPPORT_TEAMS } from '../utils/seedData.js';
 
 export function renderDashboardView(container) {
@@ -174,7 +174,9 @@ export function renderDashboardView(container) {
                   <td class="table-ticket-id">${t.id}</td>
                   <td>
                     <div class="table-ticket-title">${escapeHTML(t.title)}</div>
-                    <div class="table-ticket-sub">Client: ${escapeHTML(t.company || 'GEM Arena')} • ${t.onBehalfOf ? `On behalf of ${escapeHTML(t.onBehalfOf)}` : `Reporter: ${escapeHTML(t.reporter.name)}`}</div>
+                    <div class="table-ticket-sub">
+                      Created by <strong style="color: var(--text-main);">${escapeHTML(t.reporter ? t.reporter.name : 'Unknown')}</strong> on <span style="color: var(--text-main); font-weight: 600;">${formatDateTime(t.createdAt)}</span> (${formatTimeAgo(t.createdAt)}) • Client: ${escapeHTML(t.company || 'GEM Arena')}
+                    </div>
                   </td>
                   <td><span class="badge badge-category" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border-color: rgba(56, 189, 248, 0.25);">${escapeHTML(t.supportTeam || 'sai Krishna Support Team')}</span></td>
                   <td><span class="badge badge-category">${escapeHTML(t.category)}</span></td>

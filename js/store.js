@@ -229,12 +229,16 @@ class AppStore {
 
   createTicket(ticketData) {
     const newId = `TCK-${1000 + this.state.tickets.length + 1}`;
+    const createdByName = ticketData.createdBy || ticketData.reporter?.name || this.state.currentUser?.name || "Srinivas Theerthala";
+    const avatarInitials = createdByName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || "ST";
+
     const newTicket = {
       id: newId,
       title: ticketData.title,
       description: ticketData.description,
       company: ticketData.company || "GEM Arena",
       location: ticketData.location || "Kondapur",
+      createdBy: createdByName,
       onBehalfOf: ticketData.onBehalfOf || "Direct User",
       department: ticketData.department || "IT",
       designation: ticketData.designation || "Executive",
@@ -247,7 +251,7 @@ class AppStore {
       impact: ticketData.impact || "Medium",
       requireApproverCheck: ticketData.requireApproverCheck || false,
       status: "Open",
-      reporter: ticketData.reporter || { name: this.state.currentUser.name || "Srinivas Theerthala", email: this.state.currentUser.email || "srinivas.t@gemmotors.com", avatar: this.state.currentUser.avatar || "ST" },
+      reporter: { name: createdByName, email: `${createdByName.toLowerCase().replace(/\s+/g, '.')}@gemarena.com`, avatar: avatarInitials },
       assignee: ticketData.assignee || this.state.agents[0],
       createdAt: new Date().toISOString(),
       createdAgoHours: 0,

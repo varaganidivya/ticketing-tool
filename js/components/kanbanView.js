@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { store } from '../store.js';
-import { calculateSLA, escapeHTML, showToast } from '../utils/helpers.js';
+import { calculateSLA, escapeHTML, formatDateTime, formatTimeAgo, showToast } from '../utils/helpers.js';
 
 export function renderKanbanView(container) {
   const tickets = store.getFilteredTickets();
@@ -56,6 +56,11 @@ export function renderKanbanView(container) {
                     </div>
 
                     <div class="kanban-card-title">${escapeHTML(t.title)}</div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 0.72rem; color: var(--text-dim);">
+                      <span><i class="fa-solid fa-user-pen" style="color: var(--brand-primary); margin-right: 3px;"></i>${escapeHTML(t.reporter ? t.reporter.name : 'Unknown')}</span>
+                      <span><i class="fa-regular fa-calendar" style="color: var(--brand-primary); margin-right: 3px;"></i>${formatTimeAgo(t.createdAt)}</span>
+                    </div>
 
                     <div style="display: flex; gap: 6px; margin-bottom: 8px;">
                       <span class="badge badge-category">${t.category}</span>
